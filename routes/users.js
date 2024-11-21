@@ -26,7 +26,10 @@ router.post("/signup", (req, res) => {
       });
 
       newUser.save().then((newDoc) => {
-        res.json({ result: true, token: newDoc.token });
+        res.json({
+          result: true,
+          data: { token: newDoc.token, userName: newDoc.userName, firstName: newDoc.firstName },
+        });
       });
     } else {
       // User already exists in database
@@ -43,16 +46,14 @@ router.post("/signin", (req, res) => {
 
   User.findOne({ userName: req.body.userName }).then((data) => {
     if (data && bcrypt.compareSync(req.body.password, data.password)) {
-      res.json({ result: true, token: data.token });
+      res.json({
+        result: true,
+        data: { token: data.token, userName: data.userName, firstName: data.firstName },
+      });
     } else {
       res.json({ result: false, error: "User not found or wrong password" });
     }
   });
-});
-
-/* GET users listing. */
-router.get("/", function (req, res, next) {
-  res.send("respond with a resource");
 });
 
 module.exports = router;
