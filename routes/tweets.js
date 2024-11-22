@@ -142,33 +142,4 @@ router.post("/removeLike", async (req, res) => {
   res.json({ result: true, tweetUpdated: updatedTweet });
 });
 
-// router.post("/removeLike", (req, res) => {
-//   if (!checkBody(req.body, ["_id"])) {
-//     res.json({ result: false, error: "_id required to remove like of a tweet on database" });
-//     return;
-//   }
-//   Tweet.findOne({ _id: req.body._id })
-//     .populate("likedByUserToken")
-//     .then((data) => {
-//       if (data === null) {
-//         res.json({ result: false, error: "tweet _id not in database " });
-//       } else {
-//         if (data.likeCounter > 0) {
-//           counterNewValue = data.likeCounter - 1;
-//           Tweet.updateOne({ _id: req.body._id }, { $set: { likeCounter: counterNewValue } }).then(
-//             (update) => {
-//               Tweet.findOne({ _id: req.body._id })
-//                 .populate("likedByUserToken")
-//                 .then((data) => {
-//                   res.json({ result: true, tweetUpdated: data });
-//                 });
-//             }
-//           );
-//         } else {
-//           res.json({ result: false, error: "tweet likecounter already at 0" });
-//         }
-//       }
-//     });
-// });
-
 module.exports = router;
