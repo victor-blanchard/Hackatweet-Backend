@@ -17,11 +17,11 @@ router.get("/getAllTweets", (req, res) => {
 
 //CREER UN TWEET DANS LA BDD - RENVOI LE DOCUMENT ENTIER
 router.post("/add", (req, res) => {
-  if (!checkBody(req.body, ["tweetName", "token"])) {
+  if (!checkBody(req.body, ["tweetName", "userName"])) {
     res.json({ result: false, error: "Missing or empty fields" });
     return;
   }
-  User.findOne({ token: req.body.token }).then((data) => {
+  User.findOne({ userName:req.body.userName }).then((data) => {
     if (data === null) {
       res.json({ result: false, error: "user token not in database " });
     } else {
@@ -29,7 +29,7 @@ router.post("/add", (req, res) => {
       const newTweet = new Tweet({
         tweetName: req.body.tweetName,
         tweetedTime: now,
-        tweetedByUser: req.body.token,
+        tweetedByUser: req.body.userName,
         likeCounter: 0,
         likedByUserToken: [],
         hashtags: [],

@@ -23,6 +23,7 @@ router.post("/signup", (req, res) => {
         password: hash,
         token: uid2(32),
         firstName: req.body.firstName,
+        userPhoto:"profilePicture.jpg"
       });
 
       newUser.save().then((newDoc) => {
